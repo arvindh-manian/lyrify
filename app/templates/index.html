@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Lyrify
+    </title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Get lyrics from spotify">
+    <meta name="author" content="Arvindh Manian">
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css">
+</head>
+<body>
+    {% if artists %}
+        <h1> {{artists}} - {{song}} </h1>
+        <div>
+            {% for row in lyrics %}
+                <p> {{row}} </p>
+            {% endfor %}
+    {% else %}
+        <div>
+            <h1> Lyrics to your songs. Now. </h1>
+            <p><a href="/login" class="LoginButton">Login with Spotify</a></p>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,43 @@
+body {
+    background: #121212;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+body h1 {
+    font-size: 36px;
+    color: #ffffff;
+    opacity: 0.87;
+    text-align: center;
+}
+
+body p {
+    color: rgba(233, 233, 233, .63);
+}
+
+div {
+    margin: auto;
+    text-align: center;
+}
+
+body .LoginButton {
+    color:#ffffff;
+    opacity: 1 !important;
+    background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+    background-color:#44c767;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 56px;
+    text-decoration:none;
+}
+.LoginButton:hover {
+    background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+    background-color:#5cbf2a;
+}
+.LoginButton:active {
+    position:relative;
+    top:1px;
+}

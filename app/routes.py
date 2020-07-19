@@ -7,11 +7,12 @@ import base64
 import json
 CLIENT_ID = ''
 CLIENT_SECRET = ''
-
-with open('credentials.txt') as fin:
+SEED_KEY = ''
+with open('app/credentials.txt') as fin:
     x = [l.rstrip("\n") for l in fin]
     CLIENT_ID = x[0]
     CLIENT_SECRET = x[1]
+    SEED_KEY = x[2]
 
 
 @app.route('/')
@@ -23,11 +24,25 @@ def index(code=''):
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.get(
             'https://api.spotify.com/v1/me/player/currently-playing', headers=headers)
-        return response.text
+        json_response = response.json()
+        artists = [i['name'] for i in json_response['item']['artists']]
+        song_name = json_response['item']['name']
+        lyrics = requests.get(f'https://orion.apiseeds.com/api/music/lyric/{artists[0]}/{song_name}?apikey={SEED_KEY}')
+        print(lyrics.url)
+        lyrics = lyrics.json()
+        if lyrics:
+            try:
+                lyrics['error']
+                return render_template('index.html', artists=', '.join(artists), song=song_name, lyrics=['Song not found'])
+            except KeyError:
+                pass
+            return render_template('index.html', artists=', '.join(artists), song=song_name, lyrics=lyrics['result']['track']['text'].split('\n'))
+        return render_template('index.html', artists=', '.join(artists), song=song_name, lyrics=['Song not found'])
     else:
-        return redirect('/login')
+        return render_template('index.html')
 
 
+@app.route('/stylesheets/style.css')
 @app.route('/login')
 def login():
     SCOPES = 'user-read-currently-playing'
